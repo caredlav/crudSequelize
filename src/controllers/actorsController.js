@@ -16,9 +16,12 @@ const actorsController={
         .catch(error=>console.log(error));
     },
     detail: (req,res)=>{
-        Actors.findByPk(req.params.id)
+        Actors.findByPk(req.params.id,{
+            include: [{association: "peliculas"}]
+        })
         .then(resultado=>{
             res.render('actorsDetail',{actor: resultado})
+            console.log(resultado);
         })
         .catch(error=>console.log(error));
     },
@@ -42,9 +45,14 @@ const actorsController={
         .catch(error=>console.log(error));
     },
     edit: (req,res)=>{
-        Actors.findByPk(req.params.id)
-        .then(resultado=>{
-            res.render('actorsEdit', {actor: resultado})
+        let requestActor= Actors.findByPk(req.params.id,{
+            include: [{association: "peliculas"}]
+        })
+        let requestMovie=Movies.findAll()
+        Promise.all([requestActor,requestMovie])
+        .then(([actor,movie])=>{
+            res.render('actorsEdit', {actor: actor, allMovies: movie})
+            console.log(actor);
         })
         .catch(error=>console.log(error));
     },

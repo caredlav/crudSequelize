@@ -20,15 +20,13 @@ module.exports = (sequelize, dataTypes) => {
     }
     const ActorMovie = sequelize.define(alias,cols,config);
 
-    ActorMovie.associate=function(modelos){
-        ActorMovie.belongsTo(modelos.Actor,{
+    ActorMovie.associate=function(models){
+        ActorMovie.belongsTo(models.Actor,{
          as:"actores",
          foreignKey: "actor_id"
         });
-    }
 
-    ActorMovie.associate=function(modelos){
-        ActorMovie.belongsTo(modelos.Movie,{
+        ActorMovie.belongsTo(models.Movie,{
          as:"peliculas",
          foreignKey: "movie_id"
         });

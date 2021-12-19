@@ -2,6 +2,7 @@ const path = require('path');
 const db = require('../database/models');
 const sequelize = db.sequelize;
 const { Op } = require("sequelize");
+const Genre = require('../database/models/Genre');
 
 
 //Aqui tienen una forma de llamar a cada uno de los modelos
@@ -73,13 +74,16 @@ const moviesController = {
         .catch(error=>console.log(error));        
     },
     edit: function(req,res) {
-        Movies.findByPk(req.params.id,{
-            include: [{association: 'generos'}]
+        let requestMovie= Movies.findByPk(req.params.id,{
+            include: [{association: "genero"}]
         })
-        .then(resultado=>{
-            res.render('moviesEdit',{Movie: resultado})
+        let requestGenre=Genres.findAll()        
+        Promise.all([requestMovie,requestGenre])        
+        .then(function([movie,genre]){
+            res.render('moviesEdit',{Movie: movie, allGenres: genre})
         })
         .catch(error=>console.log(error));
+        
     },
     update: function (req,res) {
         Movies.update({

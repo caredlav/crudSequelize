@@ -24,8 +24,8 @@
             <label for="genre_id">Favorite Movie </label>
             <p>
                 <select name="favorite_movie_id" id="" required>
-                    <% allMovies.forEach(genre => { %>
-                    <option value="<%= movie.id %>" <% if (Movie.genre.id == genre.id) { %><%= 'selected' %><% }; %>><%= genre.name %></option>
+                    <% allMovies.forEach(title => { %>
+                    <option value="<%= title.id %>" <% if (actor.peliculas.id == title.id) { %><%= 'selected' %><% }; %>><%= title.title %></option>
                     <% }); %>
                 </select>
             </p>
