@@ -73,7 +73,9 @@ const moviesController = {
         .catch(error=>console.log(error));        
     },
     edit: function(req,res) {
-        Movies.findByPk(req.params.id)
+        Movies.findByPk(req.params.id,{
+            include: [{association: 'generos'}]
+        })
         .then(resultado=>{
             res.render('moviesEdit',{Movie: resultado})
         })
